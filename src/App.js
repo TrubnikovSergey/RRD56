@@ -1,6 +1,13 @@
 import "./App.css";
 import React from "react";
-import { Link, Redirect, Route, Switch, useParams } from "react-router-dom";
+import {
+  Route,
+  Link,
+  Navigate,
+  Routes,
+  useParams,
+  Outlet,
+} from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -48,7 +55,7 @@ const UserPage = () => {
   );
 };
 
-const UserprofilePage = () => {
+const UserProfilePage = () => {
   const { userId } = useParams();
   return (
     <>
@@ -68,20 +75,27 @@ const UserprofilePage = () => {
   );
 };
 
+const UsersLayout = () => {
+  return (
+    <>
+      <Outlet />
+    </>
+  );
+};
+
 function App() {
   return (
     <>
-      <Switch>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/users" exact component={UsersList} />
-        <Route path="/users/:userId" exact component={UserPage} />
-        <Route
-          path="/users/:userId/profile"
-          exact
-          component={UserprofilePage}
-        />
-        <Redirect to="/" />
-      </Switch>
+      <Routes>
+        <Route path="" element={<HomePage />} />
+        <Route path="users" element={<UsersLayout />}>
+          <Route index element={<UsersList />} />
+          <Route path=":userId" element={<UserPage />} />
+          <Route path=":userId/profile" element={<UserProfilePage />} />
+          <Route path=":userId/*" element={<Navigate to="" />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </>
   );
 }

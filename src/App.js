@@ -5,7 +5,8 @@ import { Link, Redirect, Route, Switch, useParams } from "react-router-dom";
 const HomePage = () => {
   return (
     <>
-      <h1>HomePage</h1>;<Link to="/users">Users list</Link>
+      <h1>HomePage</h1>
+      <Link to="/users">Users list</Link>
     </>
   );
 };
@@ -37,15 +38,17 @@ const UserPage = () => {
   const { userId } = useParams();
   return (
     <>
-      <h1>User edit page</h1>
+      <h1>User page</h1>
       <br />
-      <Link to={`/users/${userId}/edit`}>User edit page</Link>
-      <h1>Users list</h1>;<Link to="/users">Users list</Link>
+      <Link to={`/users/${userId}/profile`}>User edit page</Link>
+      <h3>Users list</h3>
+      <Link to="/users">Users list</Link>
+      <h3>userID: {userId}</h3>
     </>
   );
 };
 
-const UserEditPage = () => {
+const UserprofilePage = () => {
   const { userId } = useParams();
   return (
     <>
@@ -72,7 +75,11 @@ function App() {
         <Route path="/" exact component={HomePage} />
         <Route path="/users" exact component={UsersList} />
         <Route path="/users/:userId" exact component={UserPage} />
-        <Route path="/users/:userId/edit" exact component={UserEditPage} />
+        <Route
+          path="/users/:userId/profile"
+          exact
+          component={UserprofilePage}
+        />
         <Redirect to="/" />
       </Switch>
     </>
